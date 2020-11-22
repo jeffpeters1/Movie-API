@@ -25,7 +25,14 @@ namespace Movie.API.Controllers
         public IActionResult GetByMovieId(int movieId)
         {
             var movieData = _metadataRepository.GetByMovieId(movieId);
+
+            if (NoDataFound())
+                return NotFound();
+
             return Ok(movieData);
+
+            //local function
+            bool NoDataFound() => movieData.Count == 0;
         }
 
         [HttpGet("{metadataId}", Name = "GetByMetadataId")]
